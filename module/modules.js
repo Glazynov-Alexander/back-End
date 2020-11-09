@@ -10,7 +10,7 @@ const base = new Schema({
 
 
 const task = new Schema({
-    idTask: {type:Number, required: true},
+
     taskChecked: {type:Boolean, required: true},
     textTask: {type:String, required: true}
 })

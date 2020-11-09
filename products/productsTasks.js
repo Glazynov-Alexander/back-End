@@ -6,18 +6,18 @@ const { Tasks} = require('../module/modules');
 // };
 
 
-exports.deleteTask =  function (req, res) {
-    Tasks.findOneAndDelete({_id: req.body.id}, function (err, docs) {
-            if (err) return  next(err)
-             return    res.send("delete task")
+exports.deleteTask = async function (req, res) {
 
-        });
+    console.log(req.query)
+
+   await Tasks.deleteOne({_id:req.query.id})
+
+    res.send("delete task")
 };
 
-exports.createTask = (req, res) => {
 
+exports.createTask = (req, res) => {
     let product = new Tasks({
-        idTask: req.body.idTask,
         taskChecked: req.body.taskChecked,
         textTask: req.body.textTask
     })
@@ -43,7 +43,6 @@ exports.update = (req,res) => {
         if (err) {
             res.status(500).send(err);
         } else {
-
             task.taskChecked = req.body.checked
 
             task.save((err, updated_item) => {
@@ -57,3 +56,11 @@ exports.update = (req,res) => {
 
 
 }
+
+
+
+//     , function (err, docs) {
+//     if (err) return  next(err)
+//     return    res.send("delete task")
+//
+// });
