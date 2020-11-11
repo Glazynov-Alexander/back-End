@@ -7,8 +7,8 @@ const app = express()
 
 const mongoose = require('mongoose')
 const uri = 'mongodb+srv://admin:admin@cluster0.w41p4.mongodb.net/Todos';
-const  bm =   uri;
-mongoose.connect(bm, {useNewUrlParser: true,  useUnifiedTopology: true })
+
+mongoose.connect(uri, {useNewUrlParser: true,  useUnifiedTopology: true })
 
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
