@@ -42,7 +42,7 @@ exports.update = (req, res) => {
             return next(err)
         } else {
             task.taskChecked = req.body.checked
-            task.save((err, updated_item) => {
+            task.save((err) => {
                 if (err) {
                     return next(err)
                 }
