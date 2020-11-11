@@ -6,7 +6,7 @@ const  tasks = require('../products/tasks')
 
 
 router.post('/create/user', users.newUser)
-router.get('/user?:name=""&password=""', users.user)
+router.get('/user?:name', users.user)
 
 
 
