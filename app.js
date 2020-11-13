@@ -1,6 +1,6 @@
 const express = require('express')
 const product = require('./routs/rout')
-
+// const config = require('config')
 const bodyParser = require('body-parser');
 
 const app = express()
@@ -16,8 +16,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/products', product)
-
+app.use('/lists', product)
 let port = 1234;
 
 app.listen(port, () => {console.log('Server is up and running on port number ' + port);});

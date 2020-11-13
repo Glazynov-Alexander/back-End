@@ -5,16 +5,16 @@ exports.tasksDelete = async function (req, res) {
     await Tasks.deleteMany({taskChecked:true, symbol:req.query.symbol})
 
     Tasks.find({}, (error, tasks) => {
-        res.send({tasks, status:'you deleted completed tasks'})
+        return res.send({tasks, status:'you deleted completed tasks'})
     })
 };
 exports.deleteTask = async function (req, res) {
    await Tasks.deleteOne({_id:req.query.id})
     Tasks.find({}, (error, tasks) => {
-
-        res.send({tasks, status:'you delete one task'})
+        return res.send({tasks, status:'you delete one task'})
     })
 };
+
 exports.createTask = (req, res) => {
     let product = new Tasks({
         taskChecked: req.body.taskChecked,
@@ -26,14 +26,17 @@ exports.createTask = (req, res) => {
         if(err) {
             return next(err)
         }
-        res.send(product)
+        return res.send(product)
     })
 
 }
 exports.getTasks = async (req, res) => {
     await Tasks.find({symbol: req.query.symbol}, (err, tasks) => {
         if(err) return  next(err)
-        res.send(tasks)
+        else if(tasks.length !== 0) {
+           return  res.send({tasks, status:'not tasks'})
+        }
+        return res.send({status:'not tasks'})
     })
 }
 exports.update = (req, res) => {
@@ -47,7 +50,7 @@ exports.update = (req, res) => {
                     return next(err)
                 }
                 Tasks.find({}, (error, tasks) => {
-                    res.send({tasks, status: 'update task'})
+                    return  res.send({tasks, status: 'update task'})
                 })
             });
         }
