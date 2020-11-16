@@ -1,21 +1,24 @@
 const { Tasks} = require('../modules');
 
 
-exports.tasksDelete = async function (req, res) {
+exports.tasksDelete = async function (req, res, next) {
     await Tasks.deleteMany({taskChecked:true, symbol:req.query.symbol})
 
     Tasks.find({}, (error, tasks) => {
         return res.send({tasks, status:'you deleted completed tasks'})
     })
+    next()
 };
-exports.deleteTask = async function (req, res) {
+
+exports.deleteTask = async function (req, res,next) {
    await Tasks.deleteOne({_id:req.query.id})
     Tasks.find({}, (error, tasks) => {
         return res.send({tasks, status:'you delete one task'})
     })
+    next()
 };
 
-exports.createTask = (req, res) => {
+exports.createTask = (req, res, next) => {
     let product = new Tasks({
         taskChecked: req.body.taskChecked,
         textTask: req.body.textTask,
@@ -28,9 +31,9 @@ exports.createTask = (req, res) => {
         }
         return res.send(product)
     })
-
+    next()
 }
-exports.getTasks = async (req, res) => {
+exports.getTasks = async (req, res,next) => {
     await Tasks.find({symbol: req.query.symbol}, (err, tasks) => {
         if(err) return  next(err)
         else if(tasks.length !== 0) {
@@ -38,8 +41,11 @@ exports.getTasks = async (req, res) => {
         }
         return res.send({status:'not tasks'})
     })
+    next()
 }
-exports.update = (req, res) => {
+
+
+exports.update = (req, res, next) => {
     Tasks.findById(req.body.id, (err, task) => {
         if (err) {
             return next(err)
@@ -55,6 +61,7 @@ exports.update = (req, res) => {
             });
         }
     });
+    next()
 }
 
 

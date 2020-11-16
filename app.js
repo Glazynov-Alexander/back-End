@@ -1,24 +1,33 @@
 const express = require('express')
-const product = require('./routs/rout')
+const mongoose = require('mongoose')
+const product = require('./routs/task')
+const auth = require('./routs/auth')
+
 // const config = require('config')
+
 const bodyParser = require('body-parser');
+const {dbUrl} = require('./default.json');
+const cors = require('cors');
 
 const app = express()
 
-const mongoose = require('mongoose')
-const uri = 'mongodb+srv://admin:admin@cluster0.w41p4.mongodb.net/Todos';
 
-mongoose.connect(uri, {useNewUrlParser: true,  useUnifiedTopology: true })
 
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+
+// mongoose.Promise = global.Promise;
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+
 app.use('/lists', product)
+app.use('/', auth)
 let port = 1234;
 
-app.listen(port, () => {console.log('Server is up and running on port number ' + port);});
+app.listen(port, () => console.log('Server is up and running on port number ' + port));
 
 

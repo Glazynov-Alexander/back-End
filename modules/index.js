@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const base = new Schema({
+const user = new Schema({
     name: {type:String, required: true},
     password: {type:String, required: true}
 })
@@ -12,9 +12,17 @@ const task = new Schema({
     symbol: {type:String, required: true},
 })
 
+const token = new Schema({
+    tokenId: {type:String},
+    userId: {type:String},
+})
 
-const user =  mongoose.model('Users', base)
+
+
+const users =  mongoose.model('Users', user)
 const tasks =  mongoose.model('Tasks', task)
+const tokens =  mongoose.model('Tokens', token)
 
-module.exports = {Users: user, Tasks: tasks}
+
+module.exports = {Users: users, Tasks: tasks, Tokens: tokens}
 
