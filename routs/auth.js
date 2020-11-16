@@ -6,8 +6,8 @@ const middleware = require('../middleware')
 
 
 router.post('/auth/registration',  auth.registration)
-router.get('/auth/login',middleware, auth.login)
-router.get('/refresh-tokens',middleware, auth.refreshTokens)
+router.get('/auth/login', auth.login)
+router.get('/auth/refresh-tokens', auth.refreshTokens)
 
 
 

@@ -8,7 +8,8 @@ exports.createAccessToken = (userId) => {
         userId,
         type: "access"
     }
-    return jwt.sign(token, secret, {expiresIn: "2m"})
+    // {expiresIn: "2m"}
+    return jwt.sign(token, secret)
 }
 
 
@@ -17,10 +18,10 @@ exports.createRefreshToken = () => {
         id: uuid.v4(),
         type: "refresh"
     }
-
+    // {expiresIn: "3m"}
     return {
         id: payload.id,
-        token: jwt.sign(payload, "refresh", {expiresIn: "3m"})
+        token: jwt.sign(payload, "refresh", )
     }
 }
 
