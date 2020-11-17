@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
             jwt.verify(token, secret)
         } catch (e) {
             if (e instanceof jwt.JsonWebTokenError) {
-                return res.status(401).json({e, sms: 'invalid token'})
+                return res.status(401).json({sms: 'invalid token'})
             }
         }
     }

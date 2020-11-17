@@ -18,7 +18,6 @@ const token = new Schema({
 })
 
 
-
 const users =  mongoose.model('Users', user)
 const tasks =  mongoose.model('Tasks', task)
 const tokens =  mongoose.model('Tokens', token)
