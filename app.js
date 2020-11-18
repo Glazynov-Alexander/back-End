@@ -1,13 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const product = require('./routs/task')
-const auth = require('./routs/auth')
+const product = require('./routes/task.route')
+const auth = require('./routes/auth.route')
 
 // const config = require('config')
 
 const bodyParser = require('body-parser');
 const {dbUrl} = require('./default.json');
-const cors = require('cors');
+
 
 const app = express()
 

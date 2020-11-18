@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 
-const  tasks = require('../products/tasks')
+const  tasks = require('../controllers/tasks.controller')
 const  middleware = require('../middleware')
 
 

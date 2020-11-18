@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const {secret} = require("../default.json")
-const {Tokens, Users} = require("../modules/index")
+const {Tokens, Users} = require("../models")
 const uuid = require("uuid")
 
 exports.createAccessToken = (userId) => {
@@ -40,3 +40,4 @@ exports.processingRequest = async (user) => {
     if (!us) return 'not user'
     return {user: us, status: 'user such'}
 }
+

@@ -1,28 +1,28 @@
-const {Tasks} = require('../modules');
+const {Tasks: TasksController} = require('../models');
 const jwt = require('jsonwebtoken')
 
 let getTasksUser = async (authorization) => {
     let a = await authorization.replace('Bearer ', '')
     let candidate = await jwt.decode(a)
     if (!candidate) return "not tasks"
-    let tasks = await Tasks.find({symbol: candidate.userId})
+    let tasks = await TasksController.find({symbol: candidate.userId})
     return tasks
 }
 
 exports.tasksDelete = async function (req, res) {
-    await Tasks.deleteMany({taskChecked: true, symbol: req.query.symbol})
+    await TasksController.deleteMany({taskChecked: true, symbol: req.query.symbol})
     let tasks = await getTasksUser(req.headers.authorization)
     return res.send({tasks, status: 'you deleted completed tasks'})
 };
 
 exports.deleteTask = async function (req, res) {
-    await Tasks.deleteOne({_id: req.query.id})
+    await TasksController.deleteOne({_id: req.query.id})
     let tasks = await getTasksUser(req.headers.authorization)
     return res.send({tasks, status: 'you delete one task'})
 };
 
 exports.createTask = (req, res) => {
-    let product = new Tasks({
+    let product = new TasksController({
         taskChecked: req.body.taskChecked,
         textTask: req.body.textTask,
         symbol: req.body.symbol,
@@ -42,13 +42,13 @@ exports.getTasks = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    await Tasks.updateOne({_id: req.body.id}, {taskChecked: req.body.checked})
+    await TasksController.updateOne({_id: req.body.id}, {taskChecked: req.body.checked})
     let tasks = await getTasksUser(req.headers.authorization)
     return res.send({tasks, status: 'update task'})
 }
 
 exports.updatesTasks = async (req, res) => {
-    let a = await Tasks.updateMany({taskChecked: false}, {taskChecked: req.body.checked})
+    await TasksController.updateMany({taskChecked: false}, {taskChecked: req.body.checked})
     let tasks = await getTasksUser(req.headers.authorization)
     return res.send({tasks, status: 'update tasks'})
 

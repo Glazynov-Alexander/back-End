@@ -1,6 +1,6 @@
-const {Users} = require('../modules');
+const {Users: UsersController} = require('../models');
 const bcrypt = require('bcrypt');
-const {createAccessToken, createRefreshToken, createNewAccessAndRefresh, processingRequest} = require('../routs/token')
+const {createAccessToken, createRefreshToken, createNewAccessAndRefresh, processingRequest} = require('./tokens.controller')
 
 
 const updateToken = (userId) => {
@@ -13,12 +13,12 @@ const updateToken = (userId) => {
 
 
 exports.registration = async (req, res) => {
-    let client = await Users.findOne({name: req.body.name})
+    let client = await UsersController.findOne({name: req.body.name})
     //хэширование паролей
 
     if (client) return res.send({message: 'cannot create an existing user'})
     let hash = await bcrypt.hash(req.body.password, 7);
-    let user = new Users({
+    let user = new UsersController({
         name: req.body.name,
         password: hash
     })
@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
         return  res.send(result)
     }
     if (req.query.name && req.query.password) {
-        let user = await Users.findOne({name: req.query.name});
+        let user = await UsersController.findOne({name: req.query.name});
         // проверка хэшированного пароля с не хэшированным
         if (!user) return res.send({status:'not user'})
         let check = await bcrypt.compare(req.query.password, user.password);
