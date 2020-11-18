@@ -1,7 +1,7 @@
 const {Users} = require('../modules');
-
 const bcrypt = require('bcrypt');
 const {createAccessToken, createRefreshToken, createNewAccessAndRefresh, processingRequest} = require('../routs/token')
+
 
 const updateToken = (userId) => {
     let token = createAccessToken(userId)

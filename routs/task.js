@@ -10,6 +10,7 @@ const  middleware = require('../middleware')
 
 router.get('/get/tasks',middleware, tasks.getTasks)
 router.put('/update/tasks',middleware, tasks.update)
+router.put('/update/checkeds',middleware, tasks.updatesTasks)
 router.post('/create/tasks',middleware, tasks.createTask)
 
 router.delete('/delete?:id',middleware, tasks.deleteTask)
