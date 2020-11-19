@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const product = require('./routes/task.route')
 const auth = require('./routes/auth.route')
 
-// const config = require('config')
+
 
 const bodyParser = require('body-parser');
 const {dbUrl} = require('./default.json');
@@ -15,9 +15,9 @@ const app = express()
 
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 
-// mongoose.Promise = global.Promise;
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
