@@ -2,10 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const product = require('./routes/task.route')
 const auth = require('./routes/auth.route')
-
-
-
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const {dbUrl} = require('./default.json');
 
 
@@ -19,6 +17,8 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+mongoose.set("debug", true)
+app.use(morgan("dev"))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

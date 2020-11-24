@@ -2,13 +2,16 @@ const express = require('express')
 const router = express.Router();
 
 
-const  tasks = require('../controllers/tasks.controller')
-const  middleware = require('../middleware')
+const  tasks = require('../controllers/tasks')
+
+const  middleware = require('../middleware/auth')
 
 
 
 
-router.get('/get/tasks',middleware, tasks.getTasks)
+
+
+router.get('/get/tasks', middleware, tasks.getTasks)
 router.put('/update/tasks',middleware, tasks.update)
 router.put('/update/checkeds',middleware, tasks.updatesTasks)
 router.post('/create/tasks',middleware, tasks.createTask)

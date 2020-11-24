@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const user = new Schema({
     name: {type:String, required: true},
-    password: {type:String, required: true}
+    password: {type:String, required: true},
 }, { versionKey: false })
 
 const task = new Schema({
