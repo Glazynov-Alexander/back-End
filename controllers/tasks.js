@@ -1,5 +1,6 @@
-const {Tasks: Tasks} = require('../models');
+const {Tasks} = require('../models/task');
 const jwt = require('jsonwebtoken')
+const joi = require('joi')
 
 let getTasksUser = async (authorization) => {
     let token = await authorization.replace('Bearer ', '')
@@ -21,7 +22,17 @@ exports.deleteTask = async function (req, res) {
     return res.send({tasks, status: 'you delete one task'})
 };
 
-exports.createTask = (req, res, next) => {
+exports.createTask = async (req, res, next) => {
+    let schema = await joi.object({
+        textTask: joi.string().min(3).max(20).required()
+        , taskChecked: joi.boolean()
+        , symbol: joi.string()
+    })
+    let result = await schema.validate(req.body)
+    if (result.error) {
+        return res.json({status: result.error.details[0].message})
+    }
+
     let product = new Tasks({
         taskChecked: req.body.taskChecked,
         textTask: req.body.textTask,
@@ -31,7 +42,7 @@ exports.createTask = (req, res, next) => {
         if (err) {
             return next(err)
         }
-        return res.send(product)
+        return res.json(product)
     })
 }
 
@@ -42,9 +53,11 @@ exports.getTasks = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    await Tasks.updateOne({_id: req.body.id}, {taskChecked: req.body.checked})
-    let tasks = await getTasksUser(req.headers.authorization)
-    return res.send({tasks, status: 'update task'})
+    await Tasks.findOneAndUpdate({_id: req.body.id}, {taskChecked: req.body.checked}, (err, doc) => {
+        if (err) return res.status(400)
+        return res.send({task: {taskChecked: req.body.checked, id: req.body.id}, status: 'update task'})
+
+    })
 }
 
 exports.updatesTasks = async (req, res) => {

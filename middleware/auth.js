@@ -1,4 +1,7 @@
-const {secret} = require('../default.json')
+
+
+const env = require("env2")("../.env")
+const secret = process.env.SECRET || "access"
 const jwt = require('jsonwebtoken')
 
 module.exports = async (req, res, next) => {

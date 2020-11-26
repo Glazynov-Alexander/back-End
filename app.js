@@ -1,14 +1,12 @@
+const env = require('env2')('./.env')
 const express = require('express')
 const mongoose = require('mongoose')
 const product = require('./routes/task.route')
 const auth = require('./routes/auth.route')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const {dbUrl} = require('./default.json');
-
-
+const dbUrl = process.env.DB_URL;
 const app = express()
-
 
 
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -26,8 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/lists', product)
 app.use('/', auth)
-let port = 1234;
 
-app.listen(port, () => console.log('Server is up and running on port number ' + port));
+app.listen(process.env.PORT, () => console.log('Server is up and running on port number ' + process.env.PORT));
 
 
