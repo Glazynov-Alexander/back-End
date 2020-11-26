@@ -1,6 +1,4 @@
-
-
-const env = require("env2")("../.env")
+const env = require("env2")("./.env")
 const secret = process.env.SECRET || "access"
 const jwt = require('jsonwebtoken')
 

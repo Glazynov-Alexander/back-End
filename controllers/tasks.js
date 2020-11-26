@@ -17,9 +17,9 @@ exports.tasksDelete = async function (req, res) {
 };
 
 exports.deleteTask = async function (req, res) {
-    await Tasks.deleteOne({_id: req.query.id})
-    let tasks = await getTasksUser(req.headers.authorization)
-    return res.send({tasks, status: 'you delete one task'})
+     await Tasks.deleteOne({_id: req.query.id})
+    // let tasks = await getTasksUser(req.headers.authorization)
+    return res.send({id: req.query.id, status: 'you delete one task'})
 };
 
 exports.createTask = async (req, res, next) => {
