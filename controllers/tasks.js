@@ -12,13 +12,11 @@ let getTasksUser = async (authorization) => {
 
 exports.tasksDelete = async function (req, res) {
     await Tasks.deleteMany({taskChecked: true, symbol: req.query.symbol})
-    let tasks = await getTasksUser(req.headers.authorization)
-    return res.send({tasks, status: 'you deleted completed tasks'})
+    return res.send({taskChecked:true, status: 'you deleted completed tasks'})
 };
 
 exports.deleteTask = async function (req, res) {
      await Tasks.deleteOne({_id: req.query.id})
-    // let tasks = await getTasksUser(req.headers.authorization)
     return res.send({id: req.query.id, status: 'you delete one task'})
 };
 
