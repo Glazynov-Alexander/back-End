@@ -60,8 +60,7 @@ exports.update = async (req, res) => {
 
 exports.updatesTasks = async (req, res) => {
     await Tasks.updateMany({taskChecked: false}, {taskChecked: req.body.checked})
-    let tasks = await getTasksUser(req.headers.authorization)
-    return res.send({tasks, status: 'update tasks'})
+    return res.send({taskChecked:req.body.checked, status: 'update tasks'})
 }
 
 
