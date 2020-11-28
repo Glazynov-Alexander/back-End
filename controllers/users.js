@@ -66,11 +66,13 @@ exports.tokenAuthorization = async (req, res) => {
 
 
 exports.refreshTokens = async (req, res, next) => {
+
     const refresh = req.body.refresh
     let payload
     try {
         payload = await jwt.decode(refresh, 'refresh')
-        await jwt.verify(req.header('Authorization'), 'access')
+        console.log(payload)
+        //  jwt.verify(req.header('Authorization'), 'access')
     } catch (e) {
         if (e instanceof jwt.TokenExpiredError) {
             return res.status(400).json({status: 'Token expired'})

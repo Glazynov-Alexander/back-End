@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const env = require("env2")("./.env")
+
 
 const {Tokens} = require("../models/token")
 const {Users} = require("../models/user")
@@ -12,7 +12,7 @@ exports.createAccessToken = (userId) => {
         type: "access"
     }
     // {expiresIn: "1m"}
-    return jwt.sign(token, secret,)
+    return jwt.sign(token, secret,{expiresIn: "1m"})
 }
 
 
