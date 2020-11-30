@@ -1,20 +1,16 @@
-const express = require('express')
+let express = require("express");
 const router = express.Router();
 
+const  tasks = require("../controllers/tasks");
+const  checkToken = require("../middleware/auth");
 
-const  tasks = require('../controllers/tasks')
-const  middleware = require('../middleware/auth')
+router.get("/get/tasks", checkToken, tasks.getTasks);
+router.put("/task/update",checkToken, tasks.update);
+router.put("/tasks/updates",checkToken, tasks.updatesTasks);
+router.post("/task/create",checkToken, tasks.createTask);
 
-
-
-router.get('/get/tasks', middleware, tasks.getTasks)
-router.put('/task/update',middleware, tasks.update)
-router.put('/tasks/updates',middleware, tasks.updatesTasks)
-router.post('/task/create',middleware, tasks.createTask)
-
-router.delete('/task/delete?:id',middleware, tasks.deleteTask)
-router.delete('/tasks/deletes?:symbol',middleware, tasks.tasksDelete)
+router.delete("/task/delete?:id",checkToken, tasks.deleteTask);
+router.delete("/tasks/deletes?:symbol",checkToken, tasks.tasksDelete);
 
 
-module.exports = router
-
+module.exports = router;
