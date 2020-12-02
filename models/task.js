@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const task = new Schema({
-    taskChecked: {type:Boolean, required: true},
-    textTask: {type:String, required: true},
-    symbol: {type:String, required: true},
+  taskChecked: { type: Boolean, required: true },
+  textTask: { type: String, required: true },
+  symbol: { type: String, required: true }
 }, { versionKey: false });
 
-let tasks = mongoose.model("Tasks", task);
+const tasks = mongoose.model("Tasks", task);
 
-module.exports = { Tasks: tasks};
+module.exports = { Tasks: tasks };
