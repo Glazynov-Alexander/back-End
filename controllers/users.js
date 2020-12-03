@@ -41,7 +41,6 @@ exports.registration = async (req, res) => {
 exports.login = async (req, res) => {
     if (req.query.name && req.query.password) {
         const user = await Users.findOne({name: req.query.name});
-
         if (!user) return res.status(404).json({status: "user with this name does not exist"});
 
         // проверка хэшированного пароля с не хэшированным
@@ -55,28 +54,30 @@ exports.login = async (req, res) => {
 };
 
 exports.tokenAuthorization = async (req, res) => {
+    console.log(req.query.user);
     const result = await processingRequest(req.query.user);
 
     if (typeof result === "object") {
-        return res.status(200).json({...result, user: {name: result.user.name, _id: result.user._id}});
+        const tokenAccess = await updateToken(result.user._id);
+
+        return res.status(200).json({...result, user: {name: result.user.name, _id: result.user._id}, tokens: tokenAccess});
     }
     return res.status(400).json({status: result});
 };
 
 exports.vk = async (req, res) => {
-    await Users.findOne({name: req.user.name}, async (err, resul) => {
+    await Users.findOne({name: req.user.name}, async (err, result) => {
         if (err) return res.status(409).json({status: "cannot create an existing user"});
-        if (!resul) {
+        if (!result) {
             let user = await Users.create({name: req.user.name, password: req.user.password});
             const tokenAccess = await updateToken(user._id);
-            res.status(201).json({user: {name: user.name, _id: user._id}, token: tokenAccess});
+            return res.redirect(`http://localhost:3000/login/:access=${tokenAccess.token}`);
+
         } else {
-            const tokenAccess = await updateToken(resul._id);
-            res.status(201).json({user: {name: resul.name, _id: resul._id}, token: tokenAccess});
+            const tokenAccess = await updateToken(result._id);
+            return res.redirect(`http://localhost:3000/login/:access=${tokenAccess.token}`);
         }
     });
-
-    // res.redirect("http://localhost:3000/tasks");
 };
 
 exports.refreshTokens = async (req, res) => {

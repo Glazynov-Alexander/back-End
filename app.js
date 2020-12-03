@@ -20,7 +20,6 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 mongoose.set("debug", true);
 
-
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -31,25 +30,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
 app.use("/lists", product);
 app.use("/auth", auth);
 
 
-
-
 app.get("/auth/vkontakte", passport.authenticate("vkontakte",
-    {scope: ["status", "friends", "name"], prompt: "select_account"}));
-
+    {scope: ["status", "friends", "name"]}));
 
 app.get("/auth/vkontakte/callback",
     passport.authenticate("vkontakte", {
         successRedirect: "/auth/vk",
-        failureRedirect: "/auth/login"
+        failureRedirect: "http://localhost:3000/login"
     })
 );
-
-app.get("/",  auth);
 
 
 app.listen(PORT, () => console.log(`Server is up and running on port number ${PORT}`));

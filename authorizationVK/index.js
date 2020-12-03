@@ -1,10 +1,4 @@
 require("env2")("./.env");
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const bodyParser = require("body-parser");
-// const morgan = require("morgan");
-// const product = require("./routes/task.route");
-// const auth = require("./routes/auth.route");
 
 let passport = require("passport");
 
@@ -15,15 +9,14 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-
+    console.log(id);
             done(null, id);
-
 });
 
 passport.use(new VKontakteStrategy(
     {
-        clientID: 7683874,
-        clientSecret: "qViYDfGnBspoLKF4Qp3n",
+        clientID: 7686582 ,
+        clientSecret: "7YNdhXuuXW7FVEgogITa",
         callbackURL: "http://localhost:5001/auth/vkontakte/callback",
     },
     function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done) {
