@@ -71,11 +71,11 @@ exports.vk = async (req, res) => {
         if (!result) {
             let user = await Users.create({name: req.user.name, password: req.user.password});
             const tokenAccess = await updateToken(user._id);
-            return res.redirect(`https://tron1.herokuapp.com/login/:access=${tokenAccess.token}`);
+            return res.redirect(`https://gods123.herokuapp.com/login/:access=${tokenAccess.token}`);
 
         } else {
             const tokenAccess = await updateToken(result._id);
-            return res.redirect(`https://tron1.herokuapp.com/login/:access=${tokenAccess.token}`);
+            return res.redirect(`https://gods123.herokuapp.com/login/:access=${tokenAccess.token}`);
         }
     });
 };

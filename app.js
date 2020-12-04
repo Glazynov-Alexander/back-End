@@ -40,9 +40,12 @@ app.get("/auth/vkontakte", passport.authenticate("vkontakte",
 app.get("/auth/vkontakte/callback",
     passport.authenticate("vkontakte", {
         successRedirect: "/auth/vk",
-        failureRedirect: "https://tron1.herokuapp.com/login"
+        failureRedirect: "https://gods123.herokuapp.com/login"
     })
 );
+
+
+app.use("/", (req, res) => res.send("bob"));
 
 
 app.listen(PORT, () => console.log(`Server is up and running on port number ${PORT}`));
