@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const product = require("./routes/task.route");
 const auth = require("./routes/auth.route");
+const cors = require("cors");
 
 let passport = require("passport");
 require("./authorizationVK/index");
@@ -12,7 +13,14 @@ require("./authorizationVK/index");
 const {PORT, DB_URL} = process.env;
 const dbUrl = DB_URL;
 const app = express();
+let corsOptions = {
+    origin: "https://gods123.herokuapp.com",
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
+app.get("/products/:id", cors(corsOptions), function (req, res) {
+    res.json({msg: "This is CORS-enabled for only example.com."});
+});
 
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
