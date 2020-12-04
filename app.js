@@ -40,7 +40,7 @@ app.get("/auth/vkontakte", passport.authenticate("vkontakte",
 app.get("/auth/vkontakte/callback",
     passport.authenticate("vkontakte", {
         successRedirect: "/auth/vk",
-        failureRedirect: "http://localhost:3000/login"
+        failureRedirect: "https://tron1.herokuapp.com/login"
     })
 );
 

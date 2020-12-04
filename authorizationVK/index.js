@@ -17,7 +17,7 @@ passport.use(new VKontakteStrategy(
     {
         clientID: 7686582 ,
         clientSecret: "7YNdhXuuXW7FVEgogITa",
-        callbackURL: "http://localhost:5001/auth/vkontakte/callback",
+        callbackURL: "https://backendtodos2.herokuapp.com/auth/vkontakte/callback",
     },
     function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done) {
         done(null, {name: profile._json.first_name, password: profile.id + ""});
