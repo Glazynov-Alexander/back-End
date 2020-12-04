@@ -18,9 +18,6 @@ let corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.get("/products/:id", cors(corsOptions), function (req, res) {
-    res.json({msg: "This is CORS-enabled for only example.com."});
-});
 
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
@@ -36,6 +33,7 @@ app.use(require("body-parser").urlencoded({extended: true}));
 app.use(require("express-session")({secret: "keyboard cat", resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors(corsOptions));
 
 
 app.use("/lists", product);
@@ -53,7 +51,7 @@ app.get("/auth/vkontakte/callback",
 );
 
 
-app.use("/", (req, res) => res.send("bob"));
+app.use("/*", (req, res) => res.send("bob"));
 
 
 app.listen(PORT, () => console.log(`Server is up and running on port number ${PORT}`));
