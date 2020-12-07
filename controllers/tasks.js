@@ -49,9 +49,9 @@ exports.update = async (req, res) => {
   });
 };
 
-exports.updatesTasks = async (req, res) => {
-
-  await Tasks.updateMany(req.body.checked === true ? { taskChecked: false } : { taskChecked: true }, { taskChecked: req.body.checked }, (err) => {
+exports.updatesTasks = (req, res) => {
+let check = req.body.checked === true ? { taskChecked: false } : { taskChecked: true };
+  Tasks.updateMany(check, { taskChecked: req.body.checked }, (err) => {
     if (err) return res.status(404).json({ status: "this task is not" });
     return res.status(200).json({ taskChecked: req.body.checked, status: "update tasks" });
   });
