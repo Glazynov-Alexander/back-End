@@ -14,7 +14,7 @@ const {PORT, DB_URL} = process.env;
 const dbUrl = DB_URL;
 const app = express();
 let corsOptions = {
-    origin: "https://gods123.herokuapp.com",
+    origin: ["https://gods123.herokuapp.com", "http://localhost:8080"],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
