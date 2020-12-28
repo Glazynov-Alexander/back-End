@@ -41,7 +41,7 @@ exports.registration = async (req, res) => {
 exports.login = async (req, res) => {
     if (req.query.name && req.query.password) {
         const user = await Users.findOne({name: req.query.name});
-        if (!user) return res.status(404).json({status: "user with this name does not exist"});
+        if (!user) return res.status(404).send({status: "user with this name does not exist"});
 
         // проверка хэшированного пароля с не хэшированным
         const check = await bcrypt.compare(req.query.password, user.password);
